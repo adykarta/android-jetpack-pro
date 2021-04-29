@@ -1,7 +1,9 @@
 package com.dicoding.film.ui.detail
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -33,15 +35,29 @@ class DetailFilmActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailFilmViewModel::class.java]
         val extras = intent.extras
         if (extras != null) {
-            val title = extras.getString(EXTRA_FILM)
+            val id= extras.getInt(EXTRA_FILM)
             val type = extras.getString(EXTRA_TYPE)
-            if (title != null) {
-                viewModel.setSelectedFilm(title)
+            if (id != 0) {
+                viewModel.setSelectedFilm(id)
                 if(type=="film"){
-                    populateFilm(viewModel.getFilm())
+                    detailContentBinding.progressBar.visibility = View.VISIBLE
+                    viewModel.getFilm().observe(this, Observer{ film ->
+                       detailContentBinding.progressBar.visibility = View.GONE
+                        populateFilm(film)
+
+                    })
+
+
+
                 }
                 else{
-                    populateFilm(viewModel.getTvShow())
+                    detailContentBinding.progressBar.visibility = View.VISIBLE
+                    viewModel.getTvShow().observe(this, Observer{ tv ->
+                        detailContentBinding.progressBar.visibility = View.GONE
+                        populateFilm(tv)
+
+                    })
+
                 }
 
             }
