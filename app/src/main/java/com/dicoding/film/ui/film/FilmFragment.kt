@@ -1,7 +1,6 @@
 package com.dicoding.film.ui.film
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.film.databinding.FragmentFilmBinding
-import com.dicoding.film.viewmodel.ViewModelFactory
+import com.dicoding.film.ui.viewmodel.ViewModelFactory
 
 
 class FilmFragment : Fragment() {

@@ -2,8 +2,8 @@ package com.dicoding.film.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.dicoding.film.data.FilmEntity
-import com.dicoding.film.data.source.FilmRepository
+import com.dicoding.film.data.model.FilmEntity
+import com.dicoding.film.data.repository.FilmRepository
 
 class DetailFilmViewModel(private val filmRepository: FilmRepository): ViewModel() {
     private var filmId: Int = 0

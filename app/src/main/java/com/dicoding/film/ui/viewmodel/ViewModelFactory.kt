@@ -1,9 +1,9 @@
-package com.dicoding.film.viewmodel
+package com.dicoding.film.ui.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.film.data.source.FilmRepository
+import com.dicoding.film.data.repository.FilmRepository
 import com.dicoding.film.di.Injection
 import com.dicoding.film.ui.detail.DetailFilmViewModel
 import com.dicoding.film.ui.film.FilmViewModel
@@ -17,7 +17,7 @@ class ViewModelFactory private constructor(private val mFilmRepository: FilmRepo
 
         fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository(context)).apply {
+                instance ?: ViewModelFactory(Injection.provideRepository()).apply {
                     instance = this
                 }
             }

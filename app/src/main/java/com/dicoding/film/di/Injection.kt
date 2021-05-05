@@ -1,15 +1,11 @@
 package com.dicoding.film.di
 
-import android.content.Context
-import com.dicoding.film.data.source.FilmRepository
-import com.dicoding.film.data.source.remote.RemoteDataSource
-import com.dicoding.film.utils.JsonHelper
+import com.dicoding.film.data.repository.FilmRepository
+import com.dicoding.film.data.source.remote.api.ApiCall
 
 object Injection {
-    fun provideRepository(context: Context): FilmRepository {
-
-        val remoteDataSource = RemoteDataSource.getInstance(JsonHelper(context))
-
+    fun provideRepository(): FilmRepository {
+        val remoteDataSource = ApiCall.getInstance()
         return FilmRepository.getInstance(remoteDataSource)
     }
 }

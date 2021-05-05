@@ -9,8 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.film.databinding.FragmentTvShowBinding
-import com.dicoding.film.ui.film.FilmViewModel
-import com.dicoding.film.viewmodel.ViewModelFactory
+import com.dicoding.film.ui.viewmodel.ViewModelFactory
 
 class TvShowFragment : Fragment() {
     private lateinit var fragmentTvShowBinding: FragmentTvShowBinding

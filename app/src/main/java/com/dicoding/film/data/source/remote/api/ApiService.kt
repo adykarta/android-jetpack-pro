@@ -1,5 +1,7 @@
 import com.dicoding.film.data.source.remote.response.FilmDetailResponse
 import com.dicoding.film.data.source.remote.response.FilmListResponse
+import com.dicoding.film.data.source.remote.response.TvDetailResponse
+import com.dicoding.film.data.source.remote.response.TvListResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -11,9 +13,9 @@ interface ApiService {
     fun getFilm( @Path("id") id: Int): Call<FilmDetailResponse>
 
     @GET("tv/popular?api_key=f936a5466a7c2551520a62d141eabc77&language=en-US")
-    fun getTvShowList(): Call<FilmListResponse>
+    fun getTvShowList(): Call<TvListResponse>
 
     @GET("tv/{id}?api_key=f936a5466a7c2551520a62d141eabc77&language=en-US")
-    fun getTvShow( @Path("id") id: Int): Call<FilmDetailResponse>
+    fun getTvShow( @Path("id") id: Int): Call<TvDetailResponse>
 
 }

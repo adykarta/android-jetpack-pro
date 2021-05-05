@@ -1,7 +1,7 @@
 package com.dicoding.film.data.source
 
 import androidx.lifecycle.LiveData
-import com.dicoding.film.data.FilmEntity
+import com.dicoding.film.data.model.FilmEntity
 
 interface FilmDataSource {
     fun getAllFilm(): LiveData<List<FilmEntity>>
