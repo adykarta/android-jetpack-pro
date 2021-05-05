@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.film.databinding.FragmentFilmBinding
+import com.dicoding.film.ui.viewmodel.ViewModelFactory
 
 
 class FilmFragment : Fragment() {
@@ -21,10 +24,18 @@ class FilmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[FilmViewModel::class.java]
-            val films = viewModel.getFilm()
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            val viewModel = ViewModelProvider(this, factory)[FilmViewModel::class.java]
             val filmAdapter = FilmAdapter()
-            filmAdapter.setFilm(films)
+            fragmentFilmBinding.progressBar.visibility = View.VISIBLE
+
+
+            viewModel.getFilm().observe(this, Observer{ films ->
+                fragmentFilmBinding.progressBar.visibility = View.GONE
+                filmAdapter.setFilm(films)
+                filmAdapter.notifyDataSetChanged()
+            })
+
             with(fragmentFilmBinding.rvFilm) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)

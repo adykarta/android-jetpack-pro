@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dicoding.film.R
-import com.dicoding.film.data.FilmEntity
+import com.dicoding.film.data.model.FilmEntity
 import com.dicoding.film.databinding.ItemsTvshowBinding
 import com.dicoding.film.ui.detail.DetailFilmActivity
 
@@ -39,7 +39,7 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
                 tvItemDate.text =film.releaseYear.toString()
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailFilmActivity::class.java)
-                    intent.putExtra(DetailFilmActivity.EXTRA_FILM, film.title)
+                    intent.putExtra(DetailFilmActivity.EXTRA_FILM, film.id)
                     intent.putExtra(DetailFilmActivity.EXTRA_TYPE, "tvshow")
                     itemView.context.startActivity(intent)
                 }

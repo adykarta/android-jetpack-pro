@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.film.databinding.FragmentTvShowBinding
+import com.dicoding.film.ui.viewmodel.ViewModelFactory
 
 class TvShowFragment : Fragment() {
     private lateinit var fragmentTvShowBinding: FragmentTvShowBinding
@@ -20,10 +22,16 @@ class TvShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TvShowViewModel::class.java]
-            val tvshows = viewModel.getTvShow()
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            val viewModel = ViewModelProvider(this, factory)[TvShowViewModel::class.java]
+
             val tvShowAdapter = TvShowAdapter()
-            tvShowAdapter.setTvShow(tvshows)
+            viewModel.getTvShow().observe(this, Observer{ tvs ->
+                fragmentTvShowBinding.progressBar.visibility = View.GONE
+                tvShowAdapter.setTvShow(tvs)
+                tvShowAdapter.notifyDataSetChanged()
+            })
+
             with(fragmentTvShowBinding.rvTvshow) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
