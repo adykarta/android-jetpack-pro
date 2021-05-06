@@ -71,20 +71,21 @@ class DetailFilmActivity : AppCompatActivity() {
             genre.append(i.name.toString()).append(" ")
         }
 
-        detailContentBinding.textTitle.text = filmEntity.title
-        detailContentBinding.textDescription.text = filmEntity.overview
-        detailContentBinding.textGenrefilm.text = genre.toString()
-        detailContentBinding.textRating.text = filmEntity.userScore.toString()+"/10"
-        detailContentBinding.textDuration.text = if (filmEntity.duration==0) "-"  else filmEntity.duration.toString()+"m"
-        detailContentBinding.textDate.text = filmEntity.releaseYear
+        detailContentBinding.apply {
+            textTitle.text = filmEntity.title
+            textDescription.text = filmEntity.overview
+            textGenrefilm.text = genre.toString()
+            (filmEntity.userScore.toString()+"/10").also { textRating.text = it }
+            textDuration.text = if (filmEntity.duration==0) "-"  else filmEntity.duration.toString()+"m"
+            textDate.text = filmEntity.releaseYear
 
-        Glide.with(this)
-            .load(filmEntity.photo)
-            .transform(RoundedCorners(20))
-            .apply(
-                RequestOptions.placeholderOf(R.drawable.ic_loading)
-                .error(R.drawable.ic_error))
-            .into(detailContentBinding.imagePoster)
-
+            Glide.with(this@DetailFilmActivity)
+                .load(filmEntity.photo)
+                .transform(RoundedCorners(20))
+                .apply(
+                    RequestOptions.placeholderOf(R.drawable.ic_loading)
+                        .error(R.drawable.ic_error))
+                .into(imagePoster)
+        }
     }
 }
