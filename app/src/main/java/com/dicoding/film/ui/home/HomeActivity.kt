@@ -16,5 +16,20 @@ class HomeActivity : AppCompatActivity() {
         activityHomeBinding.tabs.setupWithViewPager(activityHomeBinding.viewPager)
         supportActionBar?.elevation = 0f
 
+
+        activityHomeBinding.bottomNav.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.menu_home -> {
+
+                    true
+                }
+                R.id.menu_favorites -> {
+
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 }
