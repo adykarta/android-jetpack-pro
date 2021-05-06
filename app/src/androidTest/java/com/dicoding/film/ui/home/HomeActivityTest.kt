@@ -1,7 +1,5 @@
 package com.dicoding.film.ui.home
 
-
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
@@ -11,7 +9,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.dicoding.film.R
-import com.dicoding.film.utils.DataDummy
 import com.dicoding.film.utils.EspressoIdlingResource
 import org.junit.After
 import org.junit.Before

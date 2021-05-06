@@ -11,7 +11,7 @@ import com.dicoding.film.data.source.remote.response.FilmDetailResponse
 import com.dicoding.film.data.source.remote.response.TvDetailResponse
 
 
-class FakeFilmRepository public constructor(private val remoteDataSource: ApiCall) : FilmDataSource {
+class FakeFilmRepository (private val remoteDataSource: ApiCall) : FilmDataSource {
 
 
 
