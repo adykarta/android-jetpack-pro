@@ -20,7 +20,9 @@ object DataDummy {
                 7.5,
                 "2018",
                 136,
-                "https://dummyimage.com/600x400/000/fff"
+                "https://dummyimage.com/600x400/000/fff",
+                false,
+                "film"
             )
         )
 
@@ -43,7 +45,9 @@ object DataDummy {
                 6.6,
                 "2021",
                 42,
-                "https://dummyimage.com/600x400/000/fff"
+                "https://dummyimage.com/600x400/000/fff",
+                false,
+                "tvshow"
             )
         )
 

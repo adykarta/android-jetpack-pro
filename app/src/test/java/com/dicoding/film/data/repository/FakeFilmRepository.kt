@@ -23,17 +23,20 @@ class FakeFilmRepository (private val remoteDataSource: ApiCall) : FilmDataSourc
             override fun onCallSuccess(filmResponses: ArrayList<FilmDetailResponse>) {
                 val filmList = ArrayList<FilmEntity>()
                 for (response in filmResponses) {
-                    val film = FilmEntity(
-                        response.id,
-                        response.title ?: "",
-                        response.genre,
-                        response.overview,
-                        response.userScore,
-                        response.releaseYear ?: "",
-                        response.duration ?: 0,
-                        response.photo
+                    val film =
+                        FilmEntity(
+                            response.id,
+                            response.title ?: "",
+                            response.genre,
+                            response.overview,
+                            response.userScore,
+                            response.releaseYear ?: "",
+                            response.duration ?: 0,
+                            response.photo,
+                            false,
+                            "film"
 
-                    )
+                        )
                     filmList.add(film)
                 }
                 filmResults.postValue(filmList)
@@ -54,17 +57,20 @@ class FakeFilmRepository (private val remoteDataSource: ApiCall) : FilmDataSourc
                 val tvList = ArrayList<FilmEntity>()
                 for (response in tvResponses) {
 
-                    val tv = FilmEntity(
-                        response.id,
-                        response.title ?: "",
-                        response.genre,
-                        response.overview,
-                        response.userScore,
-                        response.releaseYear ?: "",
-                        response.duration ?: 0,
-                        response.photo
+                    val tv =
+                        FilmEntity(
+                            response.id,
+                            response.title ?: "",
+                            response.genre,
+                            response.overview,
+                            response.userScore,
+                            response.releaseYear ?: "",
+                            response.duration ?: 0,
+                            response.photo,
+                            false,
+                            "tvshow"
 
-                    )
+                        )
                     tvList.add(tv)
                 }
                 tvResults.postValue(tvList)
@@ -93,7 +99,9 @@ class FakeFilmRepository (private val remoteDataSource: ApiCall) : FilmDataSourc
                     filmResponse.userScore,
                     filmResponse.releaseYear ?: "",
                     filmResponse.duration ?: 0,
-                    filmResponse.photo
+                    filmResponse.photo,
+                    false,
+                    "film"
                 )
                 detailFilmResult.postValue(film)
             }
@@ -121,7 +129,9 @@ class FakeFilmRepository (private val remoteDataSource: ApiCall) : FilmDataSourc
                     tvResponse.userScore,
                     tvResponse.releaseYear ?: "",
                     tvResponse.duration ?: 0,
-                    tvResponse.photo
+                    tvResponse.photo,
+                    false,
+                    "tvshow"
                 )
                 detailTvResult.postValue(tv)
             }
