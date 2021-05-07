@@ -2,6 +2,7 @@ package com.dicoding.film.ui.detail
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import com.dicoding.film.data.model.FilmEntity
 import com.dicoding.film.databinding.ActivityDetailFilmBinding
 import com.dicoding.film.databinding.ContentDetailFilmBinding
 import com.dicoding.film.ui.viewmodel.ViewModelFactory
+import com.dicoding.film.vo.Status
 
 class DetailFilmActivity : AppCompatActivity() {
     companion object {
@@ -41,21 +43,43 @@ class DetailFilmActivity : AppCompatActivity() {
             if (id != 0) {
                 viewModel.setSelectedFilm(id)
                 if(type=="film"){
-                    detailContentBinding.progressBar.visibility = View.VISIBLE
-                    viewModel.getFilm().observe(this, Observer{ film ->
-                       detailContentBinding.progressBar.visibility = View.GONE
-                        populateFilm(film)
+                    viewModel.getFilm.observe(this, Observer{ film ->
+                        if(film!=null){
+                            when(film.status){
+                                Status.LOADING ->  detailContentBinding.progressBar.visibility = View.VISIBLE
+                                Status.SUCCESS -> if (film.data != null) {
+                                    detailContentBinding.progressBar.visibility = View.GONE
+                                    populateFilm(film.data)
+                                }
+                                Status.ERROR ->   {
+                                    detailContentBinding.progressBar.visibility = View.GONE
+                                    Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                                }
+
+                            }
+
+                        }
+
 
                     })
-
-
-
                 }
                 else{
-                    detailContentBinding.progressBar.visibility = View.VISIBLE
-                    viewModel.getTvShow().observe(this, Observer{ tv ->
-                        detailContentBinding.progressBar.visibility = View.GONE
-                        populateFilm(tv)
+                    viewModel.getTvShow.observe(this, Observer{ film ->
+                        if(film!=null){
+                            when(film.status){
+                                Status.LOADING ->  detailContentBinding.progressBar.visibility = View.VISIBLE
+                                Status.SUCCESS -> if (film.data != null) {
+                                    detailContentBinding.progressBar.visibility = View.GONE
+                                    populateFilm(film.data)
+                                }
+                                Status.ERROR ->   {
+                                    detailContentBinding.progressBar.visibility = View.GONE
+                                    Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                                }
+
+                            }
+
+                        }
 
                     })
 

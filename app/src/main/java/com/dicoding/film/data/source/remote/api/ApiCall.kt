@@ -1,7 +1,9 @@
 package com.dicoding.film.data.source.remote.api
 
 import android.content.ContentValues
+import android.content.Context
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.dicoding.film.data.source.remote.response.*
 import com.dicoding.film.utils.EspressoIdlingResource
 import org.json.JSONException
@@ -9,21 +11,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ApiCall {
-    companion object {
+class ApiCall(private val context: Context) {
 
-        @Volatile
-        private var instance: ApiCall? = null
-
-        fun getInstance(): ApiCall =
-            instance
-                ?: synchronized(this) {
-                instance
-                    ?: ApiCall()
-                        .apply { instance = this }
-            }
-    }
     fun loadFilmList(callback: ApiCallback<ArrayList<FilmDetailResponse>>){
+
 
         val list = ArrayList<FilmDetailResponse>()
         try {
@@ -48,6 +39,7 @@ class ApiCall {
                             list.add(film)
 
                         }
+
                         callback.onCallSuccess(list)
                         EspressoIdlingResource.decrement()
 

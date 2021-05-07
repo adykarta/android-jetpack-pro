@@ -1,12 +1,10 @@
 package com.dicoding.film.data.source.local.room
 
 import androidx.lifecycle.LiveData
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.dicoding.film.data.model.FilmEntity
 
+@Dao
 interface FilmDao {
     @Query("SELECT * FROM filmentities where type='film' ")
     fun getFilm(): LiveData<List<FilmEntity>>

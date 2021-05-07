@@ -1,9 +1,8 @@
 package com.dicoding.film.data.model
 import androidx.annotation.NonNull
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.dicoding.film.data.source.remote.response.GenreResponse
+import com.dicoding.film.utils.DataConverter
 
 @Entity(tableName = "filmentities")
 data class FilmEntity(
@@ -15,6 +14,7 @@ data class FilmEntity(
     @ColumnInfo(name = "title")
     var title: String,
 
+//    @TypeConverters(DataConverter::class)
     @ColumnInfo(name = "genre")
     var genre:  ArrayList<GenreResponse>,
 

@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.film.databinding.FragmentFilmBinding
 import com.dicoding.film.ui.viewmodel.ViewModelFactory
+import com.dicoding.film.vo.Status
 
 
 class FilmFragment : Fragment() {
@@ -27,13 +29,26 @@ class FilmFragment : Fragment() {
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory)[FilmViewModel::class.java]
             val filmAdapter = FilmAdapter()
-            fragmentFilmBinding.progressBar.visibility = View.VISIBLE
-
-
+//            fragmentFilmBinding.progressBar.visibility = View.VISIBLE
             viewModel.getFilm().observe(this, Observer{ films ->
-                fragmentFilmBinding.progressBar.visibility = View.GONE
-                filmAdapter.setFilm(films)
-                filmAdapter.notifyDataSetChanged()
+                if(films !=null){
+                    when(films.status){
+                        Status.LOADING ->   fragmentFilmBinding.progressBar.visibility = View.VISIBLE
+                        Status.SUCCESS ->{
+                            fragmentFilmBinding.progressBar.visibility = View.GONE
+                            filmAdapter.setFilm(films.data)
+                            filmAdapter.notifyDataSetChanged()
+
+                        }
+                        Status.ERROR->{
+                            fragmentFilmBinding.progressBar.visibility = View.GONE
+                            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+
+                        }
+
+                    }
+                }
+
             })
 
             with(fragmentFilmBinding.rvFilm) {

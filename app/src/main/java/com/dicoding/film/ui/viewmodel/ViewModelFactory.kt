@@ -17,7 +17,7 @@ class ViewModelFactory private constructor(private val mFilmRepository: FilmRepo
 
         fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository()).apply {
+                instance ?: ViewModelFactory(Injection.provideRepository(context)).apply {
                     instance = this
                 }
             }
