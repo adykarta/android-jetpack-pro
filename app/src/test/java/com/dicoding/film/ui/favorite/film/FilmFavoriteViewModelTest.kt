@@ -1,10 +1,11 @@
-package com.dicoding.film.ui.film
+package com.dicoding.film.ui.favorite.film
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.dicoding.film.data.model.FilmEntity
 import com.dicoding.film.data.repository.FilmRepository
+import com.dicoding.film.utils.DataDummy
 import com.dicoding.film.vo.Resource
 import org.junit.Assert.*
 import org.junit.Before
@@ -17,9 +18,9 @@ import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class FilmViewModelTest {
+class FilmFavoriteViewModelTest {
 
-    private lateinit var viewModel: FilmViewModel
+    private lateinit var viewModel: FilmFavoriteViewModel
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -31,25 +32,25 @@ class FilmViewModelTest {
     private lateinit var pagedList: PagedList<FilmEntity>
 
     @Mock
-    private lateinit var observer: Observer<Resource<PagedList<FilmEntity>>>
+    private lateinit var observer: Observer<PagedList<FilmEntity>>
 
     @Before
     fun setUp() {
-        viewModel = FilmViewModel(filmRepository)
+        viewModel = FilmFavoriteViewModel(filmRepository)
     }
 
     @Test
     fun getFilm() {
-        val dummyFilms = Resource.success(pagedList)
-        `when`(dummyFilms.data?.size).thenReturn(1)
-        val films = MutableLiveData<Resource<PagedList<FilmEntity>>>()
-        films.value = dummyFilms
-        `when`(filmRepository.getAllFilm()).thenReturn(films)
-        val filmEntities = viewModel.getFilm().value
-        verify<FilmRepository>(filmRepository).getAllFilm()
+        val dummyFilms = pagedList
+        `when`(dummyFilms.size).thenReturn(1)
+        val films = MutableLiveData<PagedList<FilmEntity>>()
+        films.value =dummyFilms
+        `when`(filmRepository.getFavoritedFilm()).thenReturn(films)
+        val filmEntities = viewModel.getFavoriteFilm().value
+        verify<FilmRepository>(filmRepository).getFavoritedFilm()
         assertNotNull(filmEntities)
-        assertEquals(1, filmEntities?.data?.size)
-        viewModel.getFilm().observeForever(observer)
+        assertEquals(1, filmEntities?.size)
+        viewModel.getFavoriteFilm().observeForever(observer)
         verify(observer).onChanged(filmEntities)
 
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.dicoding.film.data.model.FilmEntity
 import com.dicoding.film.data.repository.FilmRepository
 import com.dicoding.film.utils.DataDummy
+import com.dicoding.film.vo.Resource
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -34,7 +35,7 @@ class DetailFilmViewModelTest {
 
 
     @Mock
-    private lateinit var filmObserver: Observer<FilmEntity>
+    private lateinit var filmObserver: Observer<Resource<FilmEntity>>
 
     @Before
     fun setUp() {
@@ -47,43 +48,48 @@ class DetailFilmViewModelTest {
 
     @Test
     fun getFilm() {
-        val film = MutableLiveData<FilmEntity>()
-        film.value = dummyFilm
-
+        val dummyDetailFilm = Resource.success(dummyFilm)
+        val film = MutableLiveData<Resource<FilmEntity>>()
+        film.value = dummyDetailFilm
         `when`(filmRepository.getDetailFilm(filmId)).thenReturn(film)
-        val filmEntity = viewModel.getFilm().value as FilmEntity
-        verify(filmRepository).getDetailFilm(filmId)
-        assertNotNull(filmEntity)
-        assertEquals(dummyFilm.id, filmEntity.id)
-        assertEquals(dummyFilm.title,filmEntity.title)
-        assertEquals(dummyFilm.genre,filmEntity.genre)
-        assertEquals(dummyFilm.overview,filmEntity.overview)
-        assertEquals(dummyFilm.duration,filmEntity.duration)
-        assertEquals(dummyFilm.releaseYear,filmEntity.releaseYear)
-        assertEquals(dummyFilm.userScore,filmEntity.userScore,0.0)
-        assertEquals(dummyFilm.photo,filmEntity.photo)
-        viewModel.getFilm().observeForever(filmObserver)
-        verify(filmObserver).onChanged(dummyFilm)
+        viewModel.getFilm.observeForever(filmObserver)
+        verify(filmObserver).onChanged(dummyDetailFilm)
     }
+
     @Test
     fun getTvShow() {
-        val tv = MutableLiveData<FilmEntity>()
-        tv.value = dummyTvShow
-
+        val dummyDetailTv = Resource.success(dummyTvShow)
+        val tv = MutableLiveData<Resource<FilmEntity>>()
+        tv.value = dummyDetailTv
         `when`(filmRepository.getDetailTv(tvId)).thenReturn(tv)
-        val filmEntity = viewModel.getTvShow().value as FilmEntity
-        verify(filmRepository).getDetailTv(tvId)
-        assertNotNull(filmEntity)
-        assertEquals(dummyTvShow.id, filmEntity.id)
-        assertEquals(dummyTvShow.title,filmEntity.title)
-        assertEquals(dummyTvShow.genre,filmEntity.genre)
-        assertEquals(dummyTvShow.overview,filmEntity.overview)
-        assertEquals(dummyTvShow.duration,filmEntity.duration)
-        assertEquals(dummyTvShow.releaseYear,filmEntity.releaseYear)
-        assertEquals(dummyTvShow.userScore,filmEntity.userScore,0.0)
-        assertEquals(dummyTvShow.photo,filmEntity.photo)
-        viewModel.getTvShow().observeForever(filmObserver)
-        verify(filmObserver).onChanged(dummyTvShow)
+        viewModel.getTvShow.observeForever(filmObserver)
+        verify(filmObserver).onChanged(dummyDetailTv)
+    }
+
+    @Test
+    fun setFavoriteFilm() {
+        val expected = MutableLiveData<Resource<FilmEntity>>()
+        expected.value = Resource.success(DataDummy.generateDummyFilm()[0])
+        `when`(filmRepository.getDetailFilm(filmId)).thenReturn(expected)
+        viewModel.setFavoriteFilm()
+        viewModel.getFilm.observeForever(filmObserver)
+        verify(filmObserver).onChanged(expected.value)
+        val expectedValue = expected.value
+        val actualValue = viewModel.getFilm.value
+        assertEquals(expectedValue, actualValue)
+    }
+
+    @Test
+    fun setFavoriteTv() {
+        val expected = MutableLiveData<Resource<FilmEntity>>()
+        expected.value = Resource.success(DataDummy.generateDummyTvShows()[0])
+        `when`(filmRepository.getDetailTv(tvId)).thenReturn(expected)
+        viewModel.setFavoriteTv()
+        viewModel.getTvShow.observeForever(filmObserver)
+        verify(filmObserver).onChanged(expected.value)
+        val expectedValue = expected.value
+        val actualValue = viewModel.getTvShow.value
+        assertEquals(expectedValue, actualValue)
     }
 
 

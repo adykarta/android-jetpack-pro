@@ -1,4 +1,4 @@
-package com.dicoding.film.ui.tvshow
+package com.dicoding.film.ui.favorite.tvshow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
@@ -18,9 +18,9 @@ import org.mockito.junit.MockitoJUnitRunner
 
 
 @RunWith(MockitoJUnitRunner::class)
-class TvShowViewModelTest {
+class TvShowFavoriteViewModelTest {
 
-    private lateinit var viewModel: TvShowViewModel
+    private lateinit var viewModel: TvShowFavoriteViewModel
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -32,24 +32,24 @@ class TvShowViewModelTest {
     private lateinit var pagedList: PagedList<FilmEntity>
 
     @Mock
-    private lateinit var observer: Observer<Resource<PagedList<FilmEntity>>>
+    private lateinit var observer: Observer<PagedList<FilmEntity>>
     @Before
     fun setUp() {
-        viewModel = TvShowViewModel(filmRepository)
+        viewModel = TvShowFavoriteViewModel(filmRepository)
     }
 
     @Test
     fun getTv() {
-        val dummyTvs = Resource.success(pagedList)
-        Mockito.`when`(dummyTvs.data?.size).thenReturn(1)
-        val films = MutableLiveData<Resource<PagedList<FilmEntity>>>()
+        val dummyTvs = pagedList
+        Mockito.`when`(dummyTvs.size).thenReturn(1)
+        val films = MutableLiveData<PagedList<FilmEntity>>()
         films.value = dummyTvs
-        Mockito.`when`(filmRepository.getAllTvShow()).thenReturn(films)
-        val filmEntities = viewModel.getTvShow().value
-        Mockito.verify<FilmRepository>(filmRepository).getAllTvShow()
+        Mockito.`when`(filmRepository.getFavoritedTvShow()).thenReturn(films)
+        val filmEntities = viewModel.getTvShowFavorite().value
+        Mockito.verify<FilmRepository>(filmRepository).getFavoritedTvShow()
         assertNotNull(filmEntities)
-        assertEquals(1, filmEntities?.data?.size)
-        viewModel.getTvShow().observeForever(observer)
+        assertEquals(1, filmEntities?.size)
+        viewModel.getTvShowFavorite().observeForever(observer)
         Mockito.verify(observer).onChanged(filmEntities)
 
     }

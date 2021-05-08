@@ -67,6 +67,21 @@ class HomeActivityTest{
         onView(withId(R.id.text_rating)).check(matches(isDisplayed()))
         onView(withId(R.id.text_duration)).check(matches(isDisplayed()))
 
-
     }
+
+    @Test
+    fun loadFavoriteFilm(){
+        onView(withId(R.id.fav)).perform(click())
+        onView(withId(R.id.rv_film_favorite)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun loadFavoriteTv(){
+        onView(withId(R.id.fav)).perform(click())
+        onView(withText("Tv Shows")).perform(click())
+        onView(withId(R.id.rv_tvshow_favorite)).check(matches(isDisplayed()))
+    }
+
+
+
 }
