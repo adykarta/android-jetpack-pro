@@ -1,6 +1,7 @@
 package com.dicoding.film.ui.film
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,14 +30,13 @@ class FilmFragment : Fragment() {
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory)[FilmViewModel::class.java]
             val filmAdapter = FilmAdapter()
-//            fragmentFilmBinding.progressBar.visibility = View.VISIBLE
             viewModel.getFilm().observe(this, Observer{ films ->
                 if(films !=null){
                     when(films.status){
                         Status.LOADING ->   fragmentFilmBinding.progressBar.visibility = View.VISIBLE
                         Status.SUCCESS ->{
                             fragmentFilmBinding.progressBar.visibility = View.GONE
-                            filmAdapter.setFilm(films.data)
+                            filmAdapter.submitList(films.data)
                             filmAdapter.notifyDataSetChanged()
 
                         }

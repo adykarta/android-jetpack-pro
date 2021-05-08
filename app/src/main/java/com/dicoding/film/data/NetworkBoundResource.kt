@@ -19,6 +19,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecut
         val dbSource = loadFromDB()
 
         result.addSource(dbSource) { data ->
+            Log.d("shouldd", shouldFetch(data).toString())
             result.removeSource(dbSource)
             if (shouldFetch(data)) {
                 fetchFromNetwork(dbSource)

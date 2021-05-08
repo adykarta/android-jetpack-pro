@@ -22,4 +22,6 @@
     <string name="duration">duration</string>
     <string name="owner">Film List by: Muhamad Istiady Kartadibrata</string>
     <string name="favorite_action">favorite_action</string>
+    <string name="message_undo">Cancel delete item</string>
+    <string name="message_ok">OK</string>
 </resources>
