@@ -8,7 +8,7 @@
     tools:context=".ui.home.HomeActivity">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs"
+        android:id="@+id/tabs_favorite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -16,7 +16,7 @@
         app:tabIndicatorColor="@android:color/white"/>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
+        android:id="@+id/view_pager_favorite"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
