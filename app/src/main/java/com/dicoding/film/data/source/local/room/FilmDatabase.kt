@@ -4,11 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.dicoding.film.data.model.FilmEntity
+import com.dicoding.film.utils.DataConverter
 
 @Database(entities = [FilmEntity::class],
     version = 1,
     exportSchema = false)
+
+@TypeConverters(DataConverter::class)
 abstract class FilmDatabase : RoomDatabase() {
     abstract fun filmDao(): FilmDao
 

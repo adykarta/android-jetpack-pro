@@ -1,5 +1,6 @@
 package com.dicoding.film.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.dicoding.film.data.source.remote.api.ApiResponse

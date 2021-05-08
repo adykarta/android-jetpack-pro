@@ -1,6 +1,5 @@
 package com.dicoding.film.data.source.remote.api
 
-import ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

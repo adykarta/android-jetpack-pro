@@ -78,7 +78,7 @@ class FilmRepository private constructor(private val remoteDataSource: RemoteDat
                 localDataSource.getDetailFilm(id)
 
             override fun shouldFetch(data: FilmEntity?): Boolean =
-                data == null
+                data?.overview ==""
 
             public override fun createCall(): LiveData<ApiResponse<FilmEntity>> =
                 remoteDataSource.getDetailFilm(id)
@@ -97,7 +97,7 @@ class FilmRepository private constructor(private val remoteDataSource: RemoteDat
                 localDataSource.getDetailFilm(id)
 
             override fun shouldFetch(data: FilmEntity?): Boolean =
-                data == null
+                data?.overview ==""
 
             public override fun createCall(): LiveData<ApiResponse<FilmEntity>> =
                 remoteDataSource.getDetailTv(id)

@@ -14,7 +14,7 @@ data class FilmEntity(
     @ColumnInfo(name = "title")
     var title: String,
 
-//    @TypeConverters(DataConverter::class)
+    @TypeConverters(DataConverter::class)
     @ColumnInfo(name = "genre")
     var genre:  ArrayList<GenreResponse>,
 
