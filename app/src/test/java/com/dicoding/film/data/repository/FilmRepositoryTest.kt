@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,11 +12,13 @@ import com.dicoding.film.utils.DataDummy
 import com.dicoding.film.utils.LiveDataTestUtil
 import com.dicoding.film.utils.PagedListUtil
 import com.dicoding.film.vo.Resource
+import com.nhaarman.mockitokotlin2.doNothing
 import org.mockito.Mockito.mock
 
 import com.nhaarman.mockitokotlin2.verify
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
+import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.`when`
@@ -109,6 +112,18 @@ class FilmRepositoryTest {
         assertNotNull(tvEntitiesContent.data?.overview)
         assertEquals(dummyDetailTvShow.overview, tvEntitiesContent.data?.overview)
     }
+
+    @Test
+    fun setFavoriteUnFavoriteFilm() {
+        val dummyFilm = DataDummy.generateDummyFilm()[0]
+        doNothing().`when`(local).setFilmFavorite(dummyFilm,!dummyFilm.favorited)
+        filmRepository.setFavoriteFilm(dummyFilm,!dummyFilm.favorited)
+        verify(local).setFilmFavorite(dummyFilm,!dummyFilm.favorited)
+        assertEquals(true, dummyFilm.favorited)
+
+
+        }
+
 }
 
 

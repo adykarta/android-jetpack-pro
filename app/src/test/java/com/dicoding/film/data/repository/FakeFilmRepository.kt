@@ -131,6 +131,8 @@ class FakeFilmRepository constructor(private val remoteDataSource: RemoteDataSou
         return LivePagedListBuilder(localDataSource.getFavoritedTvShow(), config).build()
     }
 
-    override fun setFavoriteFilm(film: FilmEntity, state: Boolean)  = appExecutors.diskIO().execute { localDataSource.setFilmFavorite(film,state) }
+    override fun setFavoriteFilm(film: FilmEntity, state: Boolean)  = appExecutors.diskIO().execute {
+        localDataSource.setFilmFavorite(film,state)
+    }
     override fun setFavoriteTvShow(tv: FilmEntity, state: Boolean) = appExecutors.diskIO().execute { localDataSource.setFilmFavorite(tv,state) }
 }
