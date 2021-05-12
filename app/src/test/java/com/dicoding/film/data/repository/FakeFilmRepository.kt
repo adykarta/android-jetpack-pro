@@ -12,6 +12,7 @@ import com.dicoding.film.data.source.remote.RemoteDataSource
 import com.dicoding.film.data.source.remote.api.ApiResponse
 import com.dicoding.film.utils.AppExecutors
 import com.dicoding.film.vo.Resource
+import kotlinx.coroutines.Dispatchers
 
 
 class FakeFilmRepository constructor(private val remoteDataSource: RemoteDataSource,
@@ -131,8 +132,12 @@ class FakeFilmRepository constructor(private val remoteDataSource: RemoteDataSou
         return LivePagedListBuilder(localDataSource.getFavoritedTvShow(), config).build()
     }
 
-    override fun setFavoriteFilm(film: FilmEntity, state: Boolean)  = appExecutors.diskIO().execute {
-        localDataSource.setFilmFavorite(film,state)
+    override fun setFavoriteFilm(film: FilmEntity, state: Boolean) {
+      film.favorited = state;
     }
-    override fun setFavoriteTvShow(tv: FilmEntity, state: Boolean) = appExecutors.diskIO().execute { localDataSource.setFilmFavorite(tv,state) }
+
+
+    override fun setFavoriteTvShow(tv: FilmEntity, state: Boolean) {
+        tv.favorited = state;
+    }
 }

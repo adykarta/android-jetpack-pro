@@ -21,7 +21,9 @@ import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mockito.`when`
+import org.mockito.junit.MockitoJUnitRunner
 
 class FilmRepositoryTest {
 
@@ -118,11 +120,34 @@ class FilmRepositoryTest {
         val dummyFilm = DataDummy.generateDummyFilm()[0]
         doNothing().`when`(local).setFilmFavorite(dummyFilm,!dummyFilm.favorited)
         filmRepository.setFavoriteFilm(dummyFilm,!dummyFilm.favorited)
+        local.setFilmFavorite(dummyFilm,!dummyFilm.favorited)
         verify(local).setFilmFavorite(dummyFilm,!dummyFilm.favorited)
+        //set favorite
         assertEquals(true, dummyFilm.favorited)
 
+        filmRepository.setFavoriteFilm(dummyFilm,!dummyFilm.favorited)
+        local.setFilmFavorite(dummyFilm,!dummyFilm.favorited)
+        //set unfavorite
+        assertEquals(false, dummyFilm.favorited)
 
-        }
+    }
+
+    @Test
+    fun setFavoriteUnFavoriteTvShow() {
+        val dummyFilm = DataDummy.generateDummyTvShows()[0]
+        doNothing().`when`(local).setFilmFavorite(dummyFilm,!dummyFilm.favorited)
+        filmRepository.setFavoriteTvShow(dummyFilm,!dummyFilm.favorited)
+        local.setFilmFavorite(dummyFilm,!dummyFilm.favorited)
+        verify(local).setFilmFavorite(dummyFilm,!dummyFilm.favorited)
+        //set favorite
+        assertEquals(true, dummyFilm.favorited)
+
+        filmRepository.setFavoriteTvShow(dummyFilm,!dummyFilm.favorited)
+        local.setFilmFavorite(dummyFilm,!dummyFilm.favorited)
+        //set unfavorite
+        assertEquals(false, dummyFilm.favorited)
+
+    }
 
 }
 

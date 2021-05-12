@@ -71,11 +71,11 @@ class DetailFilmViewModelTest {
         val expected = MutableLiveData<Resource<FilmEntity>>()
         expected.value = Resource.success(DataDummy.generateDummyFilm()[0])
         `when`(filmRepository.getDetailFilm(filmId)).thenReturn(expected)
-        viewModel.setFavoriteFilm()
+        viewModel.getFilm.value?.data?.let { filmRepository.setFavoriteFilm(it,!it.favorited) }
         viewModel.getFilm.observeForever(filmObserver)
         verify(filmObserver).onChanged(expected.value)
-        val expectedValue = expected.value
-        val actualValue = viewModel.getFilm.value
+        val expectedValue = expected.value!!.data?.favorited
+        val actualValue = viewModel.getFilm.value?.data?.favorited
         assertEquals(expectedValue, actualValue)
     }
 
@@ -84,11 +84,11 @@ class DetailFilmViewModelTest {
         val expected = MutableLiveData<Resource<FilmEntity>>()
         expected.value = Resource.success(DataDummy.generateDummyTvShows()[0])
         `when`(filmRepository.getDetailTv(tvId)).thenReturn(expected)
-        viewModel.setFavoriteTv()
+        viewModel.getTvShow.value?.data?.let { filmRepository.setFavoriteTvShow(it,!it.favorited) }
         viewModel.getTvShow.observeForever(filmObserver)
         verify(filmObserver).onChanged(expected.value)
-        val expectedValue = expected.value
-        val actualValue = viewModel.getTvShow.value
+        val expectedValue = expected.value!!.data?.favorited
+        val actualValue = viewModel.getTvShow.value?.data?.favorited
         assertEquals(expectedValue, actualValue)
     }
 
